@@ -1,0 +1,72 @@
+<h2 class="text-center mb-4">Welches Sternerating hätten sie gerne?</h2>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .star-rating {
+            display: inline-flex;
+            flex-direction: row-reverse; /* Umkehrung der Reihenfolge */
+            gap: 12px;
+            font-size: 2.5rem;
+            justify-content: center;
+        }
+
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.2s ease;
+        }
+
+        /* Hover-Effekt: aktueller Stern und alle davor */
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+
+        /* Ausgewählter Stern und alle davor */
+        .star-rating input[type="radio"]:checked ~ label {
+            color: gold;
+        }
+
+        /* Responsives Design */
+        @media (max-width: 576px) {
+            .star-rating {
+                font-size: 2rem;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <form>
+                            <div class="star-rating mb-4">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5" class="bi bi-star-fill"></label>
+                                
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" class="bi bi-star-fill"></label>
+                                
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3" class="bi bi-star-fill"></label>
+                                
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" class="bi bi-star-fill"></label>
+                                
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" class="bi bi-star-fill"></label>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

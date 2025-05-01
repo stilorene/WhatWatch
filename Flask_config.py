@@ -3,14 +3,25 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 app = Flask(__name__)
 app.secret_key = "0890980800"
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("index.html", content = "LOL")
+    question_number = 1
 
-# @app.route("/")
-# def home():
-#     return render_template("base.html", content = "LOL")
+    if request.method == "POST":
+
+        nav = request.form.get("navigation")
+        if nav == "next" and question_number < 3:
+            question_number += 1
+
+        elif nav == "prev" and question_number > 1:
+            question_number = -1
+
+
+    block = f"blocks_to_include/question{question_number}.html"
+    return render_template("index.html", block_to_include=block, question_number=question_number)
+
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 

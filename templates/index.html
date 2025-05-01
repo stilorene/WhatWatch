@@ -1,107 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f5f5f5;
-}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-12 col-md-10 col-lg-8">
+        
 
-.container {
-    width: 50%;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 1.5rem;
-}
-
-.input-field {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.submit-btn {
-    background-color: #0066ff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.submit-btn:hover {
-    background-color: #0052cc;
-}
-
-.skip-btn {
-    background-color: #f0f0f0;
-    color: #333;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.skip-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.back-btn {
-    background-color: #f0f0f0;
-    color: #333;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.back-btn:hover {
-    background-color: #e0e0e0;
-}
-</style>
-
-<div class="form-container">
-    <h1>Bitte geben Sie Ihre Informationen ein</h1>
-    <input type="text" class="form-input" placeholder="Text hier eingeben...">
-    <div class="button-container">
-        <button type="button" class="back-btn">Zurück</button>
-        <button type="button" class="skip-btn">Überspringen</button>
-        <button type="submit" class="submit-btn">Bestätigen</button>
+        <!-- Card mit den Checkboxen -->
+        <!-- hier kommen dynamisch die Frageblöcke hin -->
+        {% include block_to_include %}
+        <!-- Navigation Buttons unter der Card -->
+        <form method="POST" action="/">
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" name="navigation" value="prev" class="btn btn-primary btn-lg px-4">Zurück</button>
+                <button type="submit" id="skipbtn" class="btn btn-light btn-lg px-4 d-none d-sm-block">Überspringen</button>
+                <button type="submit" name="navigation" value="next" class="btn btn-primary btn-lg px-4">Weiter</button>
+            </div>
+        </form>
+        <!-- Überspringen Button für mobile Ansicht -->
+        <div class="text-center mt-3 d-sm-none">
+            <button type="button" class="btn btn-light btn-lg px-4 w-100">Überspringen</button>
+        </div>
     </div>
-  </div>
+</div>
+
 {% endblock %}
