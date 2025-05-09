@@ -1,0 +1,139 @@
+<!-- Überschrift im gleichen Container wie die Card -->
+<h2 class="text-center mb-4">Aus welcher Zeit soll der Film sein?</h2>
+
+<div class="card shadow-sm mb-4" id="question-card">
+    <div class="card-body p-3 p-md-4">
+        <form class="container-fluid px-0">
+            <div class="row">
+                <!-- Klassiker (vor 1970) -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="classic" id="year-classic" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-classic">Klassiker<br><small class="text-muted">vor 1970</small></label>
+                    </div>
+                </div>
+                
+                <!-- Retro (1970-1999) -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="retro" id="year-retro" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-retro">Retro<br><small class="text-muted">1970-1999</small></label>
+                    </div>
+                </div>
+                
+                <!-- Modern (2000-2015) -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="modern" id="year-modern" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-modern">Modern<br><small class="text-muted">2000-2015</small></label>
+                    </div>
+                </div>
+                
+                <!-- Aktuell (2016-2022) -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="current" id="year-current" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-current">Aktuell<br><small class="text-muted">2016-2022</small></label>
+                    </div>
+                </div>
+                
+                <!-- Neu (2023-heute) -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="new" id="year-new" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-new">Neu<br><small class="text-muted">2023-heute</small></label>
+                    </div>
+                </div>
+                
+                <!-- Alle Zeiten -->
+                <div class="col-6 col-md-4">
+                    <div class="year-range-toggle">
+                        <input type="radio" class="btn-check" name="year-range" value="all" id="year-all" checked autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="year-all">Alle Zeiten<br><small class="text-muted">1888-2026</small></label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Benutzerdefinierter Bereich -->
+            <div class="mt-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="custom-year-toggle">
+                    <label class="form-check-label" for="custom-year-toggle">
+                        Benutzerdefinierter Zeitraum
+                    </label>
+                </div>
+                
+                <div id="custom-year-container" class="mt-3" style="display: none;">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Von</span>
+                                <input type="number" class="form-control" id="custom-year-start" min="1888" max="2026" value="1990">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Bis</span>
+                                <input type="number" class="form-control" id="custom-year-end" min="1888" max="2026" value="2026">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.year-range-toggle .btn {
+    text-align: center;
+    padding: 0.75rem 0.25rem;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    border-width: 2px;
+    font-weight: 500;
+    height: 100%;
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-check:checked + .btn-outline-primary small {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const customYearToggle = document.getElementById('custom-year-toggle');
+    const customYearContainer = document.getElementById('custom-year-container');
+    const yearRangeOptions = document.querySelectorAll('input[name="year-range"]');
+    
+    // Custom Jahr Ein-/Ausblenden
+    customYearToggle.addEventListener('change', function() {
+        customYearContainer.style.display = this.checked ? 'block' : 'none';
+        
+        // Alle vordefinierten Optionen deaktivieren wenn custom aktiv
+        if (this.checked) {
+            yearRangeOptions.forEach(option => {
+                option.checked = false;
+            });
+        } else {
+            // Wenn custom deaktiviert wird, "Alle Zeiten" auswählen
+            document.getElementById('year-all').checked = true;
+        }
+    });
+    
+    // Wenn eine vordefinierte Option ausgewählt wird, custom deaktivieren
+    yearRangeOptions.forEach(option => {
+        option.addEventListener('change', function() {
+            if (this.checked) {
+                customYearToggle.checked = false;
+                customYearContainer.style.display = 'none';
+            }
+        });
+    });
+});
+</script>

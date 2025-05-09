@@ -1,3 +1,10 @@
+#Das Skript hier macht vorerst mal nichts, habe hiermit versucht zu arbeiten, zum Teil super aber 
+#Main sollte im Web mehr auf Javascript setzen, das funktioniert einfacher und ohne unötige Umwege
+#ich verwende dieses hier vl später nochmal wenn es ans Backend und der TMDB-Api geht
+
+
+
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 app = Flask(__name__)
