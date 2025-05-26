@@ -54,10 +54,12 @@ document.getElementById("prevbtn").addEventListener("click", function () {
 });
 
 //  hier werden die ausgwählten Elemte abgerufen und gespeichert:
+
 // für question1
 function getcheckboxvalues() {
     const checkboxes = document.querySelectorAll('input[name="Streaming"]:checked');
-    const werte = Array.from(checkboxes).map(cb => cb.value);
+    // der Zugriff auf das html datenset ist etwas anders also wie im index.html, dort als data-provider-id="9" sichtbar
+    const werte = Array.from(checkboxes).map(cb => cb.value); 
     console.log("Ausgewählte Werte:", werte);
     // Hier kannst du mit den Werten machen, was du willst
 }
@@ -91,3 +93,15 @@ function getyearrange() {
         console.log("Kein Jahr ausgewählt!");
     }
 }
+
+// hier den dynamischen Sliderloader für question4
+// Globale Funktion, die im Inline-Event aufgerufen wird
+function updateYearDisplay(year) {
+    var display = document.getElementById('selectedYearDisplay');
+    if (display) {
+        display.textContent = year;
+    }
+}
+
+// Update beim Laden ausführen
+updateYearDisplay(document.getElementById('yearSlider').value);

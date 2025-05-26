@@ -10,8 +10,9 @@ params = {
     "language": "de",
     "sort_by": "popularity.desc",
     "vote_count.gte": 100,
+    "with_watch_providers": 8,
     # "vote_average.gte": 7
-    "year": 2022
+    "year": 2022,
 }
 
 response = requests.get(url, headers=headers, params=params)
