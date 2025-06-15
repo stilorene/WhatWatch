@@ -29,7 +29,8 @@ document.getElementById("nextbtn").addEventListener("click", function () {
         if (counter == 1) getcheckboxvalues();
         if (counter == 2) getstarrating();
         if (counter == 3) getgenreid();
-        if (counter == 4) getyearrange();
+        if (counter == 4) senddata(selectedYear); // rufe die Funktion direkt mit dem globalen wert aus der def SelectedYear()
+                                                // die anderen haben senddata() direkt in ihren individuellen Funktionen
 
         // counter nur erhöhen, wenn er noch nicht bei 4 ist
         if (counter < 4) {
@@ -58,9 +59,9 @@ document.getElementById("prevbtn").addEventListener("click", function () {
 // für question1
 function getcheckboxvalues() {
     const checkboxes = document.querySelectorAll('input[name="Streaming"]:checked');
-    // der Zugriff auf das html datenset ist etwas anders also wie im index.html, dort als data-provider-id="9" sichtbar
     const werte = Array.from(checkboxes).map(cb => cb.value); 
     console.log("Ausgewählte Werte:", werte);
+    senddata(werte);
     // Hier kannst du mit den Werten machen, was du willst
 }
 
@@ -73,7 +74,7 @@ function getstarrating() {
     } else {
         console.log("Kein Stern ausgewählt!");
     }
-
+    senddata(starrating.value);
 }
 
 // für question3
@@ -81,27 +82,32 @@ function getgenreid() {
     const checkboxes = document.querySelectorAll('input[name="genre"]:checked');
     const genre = Array.from(checkboxes).map(cb => cb.value);
     console.log("Ausgewählte Werte:", genre);
+    senddata(genre);
 }
 
 // für question4
-function getyearrange() {
-    const yearrange = document.querySelector('input[name="year-range"]:checked');
-
-    if (yearrange) {
-        console.log("Gewählter Zeitraum:", yearrange.value);
-    } else {
-        console.log("Kein Jahr ausgewählt!");
-    }
-}
-
 // hier den dynamischen Sliderloader für question4
 // Globale Funktion, die im Inline-Event aufgerufen wird
 function updateYearDisplay(year) {
     var display = document.getElementById('selectedYearDisplay');
     if (display) {
         display.textContent = year;
-    }
+    }// Update beim Laden ausführen
+    console.log(year)
+    selectedYear = year;
 }
 
-// Update beim Laden ausführen
-updateYearDisplay(document.getElementById('yearSlider').value);
+
+
+function senddata(data) {
+  fetch('http://localhost:5000/api/hallo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({data})
+  })
+  .then(response => response.json())
+//   .then(data => console.log(data)) // zeigt die Antwort vom Backend (nicht das gesendete JSON)
+  .catch(error => console.error('Fehler:', error));
+}

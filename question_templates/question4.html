@@ -28,16 +28,3 @@
         </div>
     </div>
 </div>
-
-<script>
-// Globale Funktion, die im Inline-Event aufgerufen wird
-function updateYearDisplay(year) {
-    var display = document.getElementById('selectedYearDisplay');
-    if (display) {
-        display.textContent = year;
-    }
-}
-
-// Update beim Laden ausführen
-updateYearDisplay(document.getElementById('yearSlider').value);
-</script>
