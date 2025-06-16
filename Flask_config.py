@@ -5,19 +5,62 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+import requests
+
+url = "https://api.themoviedb.org/3/discover/movie"
+headers = {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDlmNTBiNDg1NmIzNWRiNzczNzczODViZjgyYjAyMCIsIm5iZiI6MTc0NjgxMDQyNC42ODEsInN1YiI6IjY4MWUzNjM4Yzc5YzM1OWUzNGMxZTFhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zE2heQbFHoiBFsPJqryPvqbPfY6Sqx_GTu35r3bQYYs",  # <- Dein v4-Token hier einfügen
+    "Content-Type": "application/json;charset=utf-8"
+}
+
+
+app = Flask(__name__)
+CORS(app)  # Erlaubt Zugriffe von localhost:5500 (Frontend)
+
+#Das Skript hier macht vorerst mal nichts, habe hiermit versucht zu arbeiten, zum Teil super aber 
+#Main sollte im Web mehr auf Javascript setzen, das funktioniert einfacher und ohne unötige Umwege
+#ich verwende dieses hier vl später nochmal wenn es ans Backend und der TMDB-Api geht
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+import requests
+
+url = "https://api.themoviedb.org/3/discover/movie"
+headers = {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDlmNTBiNDg1NmIzNWRiNzczNzczODViZjgyYjAyMCIsIm5iZiI6MTc0NjgxMDQyNC42ODEsInN1YiI6IjY4MWUzNjM4Yzc5YzM1OWUzNGMxZTFhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zE2heQbFHoiBFsPJqryPvqbPfY6Sqx_GTu35r3bQYYs",  # <- Dein v4-Token hier einfügen
+    "Content-Type": "application/json;charset=utf-8"
+}
+
+
 app = Flask(__name__)
 CORS(app)  # Erlaubt Zugriffe von localhost:5500 (Frontend)
 
 @app.route('/api/hallo', methods=['POST'])
 def hallo():
     datas = request.get_json()
-    print("Empfangen:", datas)  # Wird im VS-Codeterminal angezeigt. Nicht im Browser, da ist es anonym
-    return jsonify({"antwort": datas}) #Wichtig, jeder Request (Anfrage) braucht ein Response (Antwort)
-                                        # FE(Request an BE) -> BE(Empfängt) -> BE(Response an FE) -> FE(sagt danke)
+    print("Empfangen vom Frontend:", datas)
+
+    # TMDB-API Call direkt hier mit den empfangenen Daten als Parameter
+    response = requests.get(url, headers=headers, params=datas)
+
+    if response.status_code != 200:
+        return jsonify({"error": "TMDB Anfrage fehlgeschlagen", "details": response.text}), 500
+
+    # Nur Top 10 Ergebnisse zurückgeben
+    results = response.json().get("results", [])[:10]
+
+    return jsonify({"antwort": results})
 
 if __name__ == '__main__':
     # CORS(app) 
     app.run(port=5000, debug=True)
+
+
+
+
+
+
 
 
 

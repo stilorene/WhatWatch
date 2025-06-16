@@ -5,6 +5,10 @@ headers = {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDlmNTBiNDg1NmIzNWRiNzczNzczODViZjgyYjAyMCIsIm5iZiI6MTc0NjgxMDQyNC42ODEsInN1YiI6IjY4MWUzNjM4Yzc5YzM1OWUzNGMxZTFhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zE2heQbFHoiBFsPJqryPvqbPfY6Sqx_GTu35r3bQYYs",  # <- Dein v4-Token hier einfügen
     "Content-Type": "application/json;charset=utf-8"
 }
+
+
+#hier Datenaufbereitung 
+
 #Recht einfach: das sind alle Parameter die ich übergeben kann, um damit nach einem passenden Film zu suchen
 params = {
     "language": "de",
