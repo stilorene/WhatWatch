@@ -112,16 +112,23 @@ function updateYearDisplay(year) {
 
 // Funktion um json also daten ans Backend zu senden
 function senddata() {
+  const data = { title: "Hallo" }; // Sicherstellen, dass es definiert ist
+
   fetch('http://localhost:5000/api/hallo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data) // der data-json wird ans BE gesendet
+    body: JSON.stringify(data)
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Serverfehler: " + response.status);
+      }
+      return response.json();
+    })
     .then(result => {
       console.log("Antwort vom Backend:", result);
     })
-    .catch(error => console.error('Fehler:', error));
+    .catch(error => console.error('Fehler:', error.message));
 }

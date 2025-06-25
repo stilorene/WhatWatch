@@ -2,7 +2,7 @@
 #Main sollte im Web mehr auf Javascript setzen, das funktioniert einfacher und ohne unötige Umwege
 #ich verwende dieses hier vl später nochmal wenn es ans Backend und der TMDB-Api geht
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 import requests
@@ -34,8 +34,11 @@ headers = {
 
 
 app = Flask(__name__)
-CORS(app)  # Erlaubt Zugriffe von localhost:5500 (Frontend)
+# Erlaube explizit 127.0.0.1:5500
+CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:5500"}})  # Erlaubt Zugriffe von localhost:5500 (Frontend)
 
+
+suggestions = [] #globale Liste
 @app.route('/api/hallo', methods=['POST'])
 def hallo():
     datas = request.get_json()
@@ -47,13 +50,32 @@ def hallo():
     if response.status_code != 200:
         return jsonify({"error": "TMDB Anfrage fehlgeschlagen", "details": response.text}), 500
 
-    # Nur Top 10 Ergebnisse zurückgeben
+    # daten empfangen, Nur Top 10 Ergebnisse zurückgeben
     results = response.json().get("results", [])[:10]
+    
+    #hier nur relevantes zur Liste hinzufügen
+    for result in results:
+        suggestions.append({
+            "title": result.get("title"),
+            "poster": f"https://image.tmdb.org/t/p/w500{result.get('poster_path')}",
+            "overview": result.get("overview"),
+            "rating": result.get("vote_average")
+        })
+        
+        
+       
 
-    return jsonify({"antwort": results})
+
+    #Anzeige in der Konsole
+    # return jsonify({"antwort": suggestions})
+    return render_template("suggestion.html", suggestions=suggestions)
+
+    
+
+
 
 if __name__ == '__main__':
-    # CORS(app) 
+    
     app.run(port=5000, debug=True)
 
 
