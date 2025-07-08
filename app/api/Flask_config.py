@@ -2,25 +2,6 @@
 #Main sollte im Web mehr auf Javascript setzen, das funktioniert einfacher und ohne unötige Umwege
 #ich verwende dieses hier vl später nochmal wenn es ans Backend und der TMDB-Api geht
 
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
-
-import requests
-
-url = "https://api.themoviedb.org/3/discover/movie"
-headers = {
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDlmNTBiNDg1NmIzNWRiNzczNzczODViZjgyYjAyMCIsIm5iZiI6MTc0NjgxMDQyNC42ODEsInN1YiI6IjY4MWUzNjM4Yzc5YzM1OWUzNGMxZTFhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zE2heQbFHoiBFsPJqryPvqbPfY6Sqx_GTu35r3bQYYs",  # <- Dein v4-Token hier einfügen
-    "Content-Type": "application/json;charset=utf-8"
-}
-
-
-app = Flask(__name__)
-CORS(app)  # Erlaubt Zugriffe von localhost:5500 (Frontend)
-
-#Das Skript hier macht vorerst mal nichts, habe hiermit versucht zu arbeiten, zum Teil super aber 
-#Main sollte im Web mehr auf Javascript setzen, das funktioniert einfacher und ohne unötige Umwege
-#ich verwende dieses hier vl später nochmal wenn es ans Backend und der TMDB-Api geht
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -67,8 +48,7 @@ def hallo():
 
 
     #Anzeige in der Konsole
-    # return jsonify({"antwort": suggestions})
-    return render_template("suggestion.html", suggestions=suggestions)
+    return jsonify({"antwort": suggestions})
 
     
 

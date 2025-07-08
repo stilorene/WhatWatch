@@ -1,7 +1,7 @@
 let counter = 1;
 
 function loadHTMLContent(counter) {
-  let filename = `question_templates/question${counter}.html`;
+  let filename = `app/templates/static/question_templates/question${counter}.html`;
 
   //  fetchanfrage um das richtige html in die index.html einzufügen
   fetch(filename)
